@@ -2,4 +2,40 @@ public class Turma {
     private String curso;
     private String sigla;
     private Periodo periodo;
+
+
+    public Turma() {
+        this.curso = curso;
+        this.sigla = sigla;
+        this.periodo = periodo;
+    }
+    public Turma(String curso, String sigla, Periodo periodo) {
+        this.curso = "";
+        this.sigla = "";
+        this.periodo = Periodo.MATUTINO;
+    }
+
+    public boolean getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
+    }
 }
