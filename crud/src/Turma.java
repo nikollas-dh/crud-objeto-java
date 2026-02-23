@@ -15,7 +15,7 @@ public class Turma {
         this.periodo = Periodo.MATUTINO;
     }
 
-    public boolean getSigla() {
+    public String getSigla() {
         return sigla;
     }
 
@@ -29,6 +29,15 @@ public class Turma {
 
     public void setCurso(String curso) {
         this.curso = curso;
+    }
+
+    @Override
+    public String toString() {
+        return "Turma{" +
+                "curso='" + curso + '\'' +
+                ", sigla='" + sigla + '\'' +
+                ", periodo=" + periodo +
+                '}';
     }
 
     public Periodo getPeriodo() {
