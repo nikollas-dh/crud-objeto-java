@@ -2,17 +2,20 @@ public class Turma {
     private String curso;
     private String sigla;
     private Periodo periodo;
-
+    private boolean ativo;
 
     public Turma() {
         this.curso = curso;
         this.sigla = sigla;
         this.periodo = periodo;
+        this.ativo = true;
+
     }
     public Turma(String curso, String sigla, Periodo periodo) {
-        this.curso = "";
-        this.sigla = "";
-        this.periodo = Periodo.MATUTINO;
+        this.curso = curso;
+        this.sigla = sigla;
+        this.periodo = periodo;
+        this.ativo = true;
     }
 
     public String getSigla() {
@@ -29,6 +32,14 @@ public class Turma {
 
     public void setCurso(String curso) {
         this.curso = curso;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override
