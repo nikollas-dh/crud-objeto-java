@@ -1,11 +1,23 @@
 import java.time.LocalDate;
 
-public class Aluno {
+public class Aluno implements Ativavel{
     private String nome;
     private LocalDate datanascimento;
     private Turma turma;
+    private boolean ativo;
 
+    public boolean isAtivo() {
+        return ativo;
+    }
 
+    @Override
+    public boolean setAtivo() {
+        return false;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 
     public Aluno() {
         this.nome = nome;

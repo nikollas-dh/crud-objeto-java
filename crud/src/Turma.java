@@ -1,4 +1,4 @@
-public class Turma {
+public class Turma implements Ativavel{
     private String curso;
     private String sigla;
     private Periodo periodo;
@@ -36,6 +36,11 @@ public class Turma {
 
     public boolean isAtivo() {
         return ativo;
+    }
+
+    @Override
+    public boolean setAtivo() {
+        return false;
     }
 
     public void setAtivo(boolean ativo) {
