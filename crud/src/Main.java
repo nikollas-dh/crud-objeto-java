@@ -58,7 +58,7 @@ public class Main {
                 menuTurmas();
                 break;
             case "3":
-                atualizarTurma();
+                atualizar("turma",listaTurmas);
                 menuTurmas();
                 break;
             case "4":
@@ -92,7 +92,7 @@ public class Main {
                 menuAlunos();
                 break;
             case "3":
-                atualizarAluno();
+                atualizar("aluno",listaAlunos);
                 menuAlunos();
                 break;
             case "4":
@@ -110,7 +110,7 @@ public class Main {
 
     private static void excluir(ArrayList<? extends Ativavel> lista) {
         if(isVazio(lista)) {
-            System.out.println("Não há turmas cadastradas");
+            System.out.println("Não há items cadastrados");
             return;
         }
         int idExcluir = validaId(lista);
@@ -181,7 +181,37 @@ public class Main {
     }
 
 
-    private static void atualizarTurma() {
+    private static void atualizar(String editar, ArrayList<?>lista) {
+        if(isVazio((ArrayList<? extends Ativavel>) lista)) {
+            System.out.println("Não há itens cadastrados");
+            return;
+        }
+
+        listar((ArrayList<? extends Ativavel>) lista);
+
+        int idAtualizar = validaId(lista);
+        if (editar.equals("turma")){
+            System.out.printf("O período atual é: %s", listaTurmas.get(idAtualizar).getPeriodo());
+            atualizarParcial(editar,"período", idAtualizar);
+
+            System.out.printf("O curso atual é: %s", listaTurmas.get(idAtualizar).getCurso());
+            atualizarParcial(editar,"curso", idAtualizar);
+
+            System.out.printf("A sigla atual é: %s", listaTurmas.get(idAtualizar).getSigla());
+            atualizarParcial(editar,"sigla", idAtualizar);
+        }
+        else if (editar.equals("Aluno")){
+            System.out.printf("O nome atual é: %s", listaAlunos.get(idAtualizar).getNome());
+            atualizarParcial(editar,"nome", idAtualizar);
+
+            System.out.printf("A data de nascimento atual é: %s", listaAlunos.get(idAtualizar).getDatanascimento());
+            atualizarParcial(editar,"datanascimento", idAtualizar);
+
+            System.out.printf("A turma atual é: %s", listaAlunos.get(idAtualizar).getTurma());
+            atualizarParcial(editar,"turma", idAtualizar);
+        }
+    }
+private static void atualizarTurma() {
         if(isVazio(listaTurmas)) {
             System.out.println("Não há turmas cadastradas");
             return;
@@ -192,56 +222,98 @@ public class Main {
         int idAtualizar = validaId(listaTurmas);
 
         System.out.printf("O período atual é: %s", listaTurmas.get(idAtualizar).getPeriodo());
-        atualizarParcial("período", idAtualizar);
+        atualizarParcial("turma","período", idAtualizar);
 
         System.out.printf("O curso atual é: %s", listaTurmas.get(idAtualizar).getCurso());
-        atualizarParcial("curso", idAtualizar);
+        atualizarParcial("turma","curso", idAtualizar);
 
         System.out.printf("A sigla atual é: %s", listaTurmas.get(idAtualizar).getSigla());
-        atualizarParcial("sigla", idAtualizar);
-
-//        System.out.println("O período atual é: " + listaTurmas.get(idAtualizar).getPeriodo());
-//        System.out.printf("O período atual é: %s", listaTurmas.get(idAtualizar).getPeriodo());
-//        atualizarPeriodo(idAtualizar);
-//
-//        System.out.printf("O curso atual é: %s", listaTurmas.get(idAtualizar).getCurso());
-//        atualizarCurso(idAtualizar);
-//
-//        System.out.printf("A sigla atual é: %s", listaTurmas.get(idAtualizar).getSigla());
-//        atualizarSigla(idAtualizar);
+        atualizarParcial("turma","sigla", idAtualizar);
     }
 
-    private static void atualizarParcial(String atributo, int idAtualizar){
+    private static void atualizarParcial(String editar , String atributo, int idAtualizar){
         boolean rodarNovamente = true;
         while (rodarNovamente) {
             String opcao = Leitura.dados("\nDeseja modificar "+ atributo +" ? (S/N): ").toUpperCase();
             switch (opcao) {
                 case "S":
-                    switch (atributo){
-                        case "período":
-                            Periodo periodo = validarPeriodo();
-                            listaTurmas.get(idAtualizar).setPeriodo(periodo);
-                            break;
-                        case "curso":
-                            String curso = validarCurso();
-                            listaTurmas.get(idAtualizar).setCurso(curso);
-                            break;
-                        case "sigla":
-                            String sigla = validarSigla();
-                            listaTurmas.get(idAtualizar).setSigla(sigla);
-                            break;
+                    if (editar.equals("turma")){
+                        switch (atributo){
+                            case "período":
+                                Periodo periodo = validarPeriodo();
+                                listaTurmas.get(idAtualizar).setPeriodo(periodo);
+                                break;
+                            case "curso":
+                                String curso = validarCurso();
+                                listaTurmas.get(idAtualizar).setCurso(curso);
+                                break;
+                            case "sigla":
+                                String sigla = validarSigla();
+                                listaTurmas.get(idAtualizar).setSigla(sigla);
+                                break;
+                        }
+                        System.out.println(atributo + " atualizado com sucesso!");
+                        rodarNovamente = false;
+                        break;
+
                     }
-                    System.out.println(atributo + " atualizado com sucesso!");
-                    rodarNovamente = false;
-                    break;
+                    else if(editar.equals("turma")){
+                        switch (atributo){
+                            case "nome":
+                                String nome = Leitura.dados("Digite um novo nome");
+                                listaAlunos.get(idAtualizar).setNome(nome);
+                                break;
+                            case "turma":
+                                int idTurma = validaId(listaTurmas);
+                                Turma turma = listaTurmas.get(idTurma);
+                                listaAlunos.get(idAtualizar).setTurma(turma);
+                                break;
+                            case "datanascimento":
+                                LocalDate datanascimento = validarData();
+                                listaAlunos.get(idAtualizar).setDatanascimento(datanascimento);
+                                break;
+                        }
+                    }
                 case "N":
                     rodarNovamente = false;
                     break;
                 default:
                     System.out.println("Opção inválida! Escolha S para SIM ou N para NÃO");
+
             }
         }
     }
+//    private static void atualizarParcial(String atributo, int idAtualizar){
+//        boolean rodarNovamente = true;
+//        while (rodarNovamente) {
+//            String opcao = Leitura.dados("\nDeseja modificar "+ atributo +" ? (S/N): ").toUpperCase();
+//            switch (opcao) {
+//                case "S":
+//                    switch (atributo){
+//                        case "período":
+//                            Periodo periodo = validarPeriodo();
+//                            listaTurmas.get(idAtualizar).setPeriodo(periodo);
+//                            break;
+//                        case "curso":
+//                            String curso = validarCurso();
+//                            listaTurmas.get(idAtualizar).setCurso(curso);
+//                            break;
+//                        case "sigla":
+//                            String sigla = validarSigla();
+//                            listaTurmas.get(idAtualizar).setSigla(sigla);
+//                            break;
+//                    }
+//                    System.out.println(atributo + " atualizado com sucesso!");
+//                    rodarNovamente = false;
+//                    break;
+//                case "N":
+//                    rodarNovamente = false;
+//                    break;
+//                default:
+//                    System.out.println("Opção inválida! Escolha S para SIM ou N para NÃO");
+//            }
+//        }
+//    }
 
     private static String validarSigla() {
         String sigla = Leitura.dados("Digite a sigla: ");
@@ -381,7 +453,7 @@ public class Main {
     }
 
     private static int validaId(ArrayList<?> lista) {
-        String opcao = Leitura.dados("\nDigite o id do aluno desejado: ");
+        String opcao = Leitura.dados("\nDigite o id desejado: ");
         int opcaoValida = -1;
         int opcaoUsuario = -1;
         while (opcaoValida==-1){
@@ -389,7 +461,7 @@ public class Main {
 
             if (opcaoUsuario==-1) {
                 System.out.println("Opção inválida! Digite novamente: ");
-                opcao = Leitura.dados("Digite o id do aluno desejado: ");
+                opcao = Leitura.dados("Digite o id desejado: ");
             } else {
                 opcaoValida = opcaoUsuario;
             }
